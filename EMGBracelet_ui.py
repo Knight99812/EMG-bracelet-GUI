@@ -427,6 +427,15 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_10.addItem(self.horizontalSpacer_16)
 
+        self.ViewData = QPushButton(self.layoutWidget)
+        self.ViewData.setObjectName(u"ViewData")
+        self.ViewData.setMinimumSize(QSize(151, 41))
+        self.ViewData.setStyleSheet(u"background-color: rgb(242, 90, 71);\n"
+"color: rgb(255, 255, 255);\n"
+"font: 10pt \"Adobe \u9ed1\u4f53 Std R\";")
+
+        self.horizontalLayout_10.addWidget(self.ViewData)
+
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.label_5 = QLabel(self.layoutWidget)
@@ -908,6 +917,7 @@ class Ui_MainWindow(object):
         self.SNR8.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"IMU-ACC\u4fe1\u53f7\u5b9e\u65f6\u663e\u793a", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"IMU-GRO\u4fe1\u53f7\u5b9e\u65f6\u663e\u793a", None))
+        self.ViewData.setText(QCoreApplication.translate("MainWindow", u"\u67e5\u770b\u6570\u636e", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"SNR", None))
         self.SNR.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.Start.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u59cb\u8bfb\u53d6", None))

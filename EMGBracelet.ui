@@ -794,6 +794,24 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="ViewData">
+           <property name="minimumSize">
+            <size>
+             <width>151</width>
+             <height>41</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(242, 90, 71);
+color: rgb(255, 255, 255);
+font: 10pt &quot;Adobe 黑体 Std R&quot;;</string>
+           </property>
+           <property name="text">
+            <string>查看数据</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <item>
             <widget class="QLabel" name="label_5">

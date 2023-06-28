@@ -1,6 +1,8 @@
 import os
 import sys
 import datetime
+
+import numpy as np
 import winsound
 import socket
 import binascii
@@ -11,6 +13,7 @@ from PySide2.QtWidgets import QMainWindow, QApplication
 from PySide2.QtCore import QRunnable, QThreadPool, Slot, QTimer, QEventLoop, QThread, Signal
 from PySide2.QtGui import QPixmap
 from EMGBracelet_ui import Ui_MainWindow
+from DataView_ui import DataViewWindow
 from random import shuffle
 
 from utils import *
@@ -165,6 +168,50 @@ class SoundWorker(QRunnable):
         winsound.Beep(600, 1000)
 
 
+class DataWindow(QMainWindow, DataViewWindow):
+
+    def __init__(self, ID):
+        super(DataWindow, self).__init__()
+        self.setupUi(self)
+        self.setWindowTitle('EMG Data View')
+        self.EMG.setBackground("w")
+        # self.EMG.setYRange(-100, 100)
+        self.ID = ID
+        self.basedir = basedir
+        self.channel_num = 0
+        self.PREV.pressed.connect(self.prev_channel)
+        self.NEXT.pressed.connect(self.next_channel)
+
+    def prev_channel(self):
+        if self.channel_num > 0:
+            self.channel_num -= 1
+            self.draw_data(self.channel_num)
+            self.ChannelNum.setText(str(self.channel_num + 1))
+
+    def next_channel(self):
+        if self.channel_num < 7:
+            self.channel_num += 1
+            self.draw_data(self.channel_num)
+            self.ChannelNum.setText(str(self.channel_num + 1))
+
+    def draw_data(self, channel_num):
+        path = self.basedir + '/DataSave/'
+        filename = path + self.ID + '/' + self.ID + '_EMGData.txt'
+        with open(filename) as f:
+            file = f.readlines()
+        EMGData = np.zeros((len(file), 8))
+        i = 0
+        for each in file:
+            each = each.strip('\n')
+            each = each.split()
+            for j in range(8):
+                EMGData[i, j] = float(each[j])
+            i += 1
+        pen = pg.mkPen(color=(0, 0, 255))
+        print(EMGData[:, channel_num])
+        self.EMG.plot(EMGData[:, channel_num], pen=pen)
+
+
 class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self, *args, obj=None, **kwargs):
@@ -257,6 +304,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.comboBox_18.currentTextChanged.connect(self.mode_changed)
         self.comboBox_2.currentTextChanged.connect(self.crossDay_changed)
         self.crossDay = False
+
+        self.ViewData.pressed.connect(self.data_view)
+
+    def data_view(self):
+        self.dataWindow = DataWindow(self.SubjectID.text())
+        self.dataWindow.show()
+        self.dataWindow.draw_data(0)
 
     def numTrain_changed(self, s):
         self.num_train = int(s)
