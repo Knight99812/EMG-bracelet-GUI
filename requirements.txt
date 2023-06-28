@@ -1,0 +1,7 @@
+pyqtgraph~=0.13.1
+numpy~=1.23.5
+PySide2~=5.15.2.1
+DateTime~=4.7
+openpyxl~=3.0.10
+scipy~=1.9.3
+libsvm~=3.23.0.4
